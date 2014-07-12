@@ -61,7 +61,8 @@ def _validate_board(board):
 
     for y, sub in enumerate(board):
         if not isinstance(sub, (list, tuple)):
-            raise InvalidBoardException('sublist on index %s is not a list' % y)
+            raise InvalidBoardException('sublist on index %s is not a list' %
+                                        y)
 
         if len(board) != 9:
             raise InvalidBoardException(
