@@ -1,3 +1,0 @@
-[submodule "sudoku.go"]
-	path = sudoku.go
-	url = https://dennishedegaard@bitbucket.org/dennishedegaard/sudoku.go.git
