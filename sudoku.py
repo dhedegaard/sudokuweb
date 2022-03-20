@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function
 from copy import deepcopy
-from cStringIO import StringIO
+from io import StringIO
 
 
 class InvalidBoardException(RuntimeError):
@@ -70,7 +70,7 @@ def _validate_board(board):
                 'length is: %s' % (y, len(sub)))
 
         for x, elem in enumerate(sub):
-            if x is not None and not isinstance(x, (int, long)):
+            if x is not None and not isinstance(x, int):
                 raise InvalidBoardException(
                     'element on y=%s, x=%s is not int or None' % (y, x))
 
@@ -84,7 +84,7 @@ def _backtrack(board, x, y):
 
     # Iterate on the current field and pass valid values to the next
     # iteration.
-    for i in xrange(1, 10):
+    for i in range(1, 10):
         if not _is_valid(board, i, x, y):
             continue
         board[y][x] = i
@@ -108,13 +108,13 @@ def _next(board, x, y):
 
 def _is_valid(board, val, x, y):
     # Check horizontal.
-    for _x in xrange(9):
+    for _x in range(9):
         if _x != x:
             if board[y][_x] == val:
                 return False
 
     # Check vertical.
-    for _y in xrange(9):
+    for _y in range(9):
         if _y != y:
             if board[_y][x] == val:
                 return False
@@ -122,8 +122,8 @@ def _is_valid(board, val, x, y):
     # Check the current box.
     xbox = (x // 3) * 3
     ybox = (y // 3) * 3
-    for _x in xrange(xbox, xbox + 3):
-        for _y in xrange(ybox, ybox + 3):
+    for _x in range(xbox, xbox + 3):
+        for _y in range(ybox, ybox + 3):
             if _y != y and _x != x:
                 if board[_y][_x] == val:
                     return False

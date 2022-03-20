@@ -24,7 +24,7 @@ def solve():
 
     try:
         result = sudoku_solve(board)
-    except InvalidBoardException, e:
+    except InvalidBoardException as e:
         return e.message, 403
 
     return Response(
