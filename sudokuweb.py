@@ -34,4 +34,5 @@ def solve():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True, port=os.environ.get('PORT'))
+    PORT = os.environ.get('PORT')
+    app.run(debug=PORT is None, host='0.0.0.0' if PORT is not None else None, port=PORT)
