@@ -1,42 +1,57 @@
-/*global $*/
-$(function () {
-  "use strict";
+// @ts-check
 
-  $("button").click(function (e) {
-    e.preventDefault();
+const button = document.querySelector("button");
+if (button) {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
 
     /* Assemble the board into a data structure. */
-    var board = [];
-    $.each($("[data-x][data-y]"), function (idx, elem) {
-      var $elem = $(elem);
-      var x = $elem.data("x");
-      var y = $elem.data("y");
-      var val = $elem.val();
-
-      if (val === "") {
-        val = null;
-      } else {
-        val = parseInt(val);
+    /** @type {Array<Array<number | null>>} */
+    const board = [];
+    document.querySelectorAll("input[data-x][data-y]").forEach((element) => {
+      if (!(element instanceof HTMLInputElement)) {
+        return;
       }
+      const x = parseInt(element.getAttribute("data-x") ?? "");
+      const y = parseInt(element.getAttribute("data-y") ?? "");
 
-      if (x === 0) {
+      const val = element.value === "" ? null : parseInt(element.value);
+
+      if (!board[y]) {
         board.push([]);
       }
-      board[y].push(val);
+      board[y][x] = val;
     });
 
     /* Make the request. */
-    $.post("solve", { board: JSON.stringify(board) }, function (result) {
-      /* On success, fill out the empty spots and mark them. */
-      $.each(result, function (y, sublist) {
-        $.each(sublist, function (x, elem) {
-          var input = $("[data-x=" + x + "][data-y=" + y + "]");
-          if (input.val() === "") {
-            input.val(result[y][x]);
-            input.addClass("non-bold");
-          }
-        });
+    fetch("/solve", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        board: JSON.stringify(board),
+      }).toString(),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then((/** @type {Array<Array<number>>} */ payload) => {
+        payload.forEach((sublist, y) =>
+          sublist.forEach((elem, x) => {
+            /** @type {HTMLInputElement | null} */
+            const input = document.querySelector(
+              `input[data-x="${x}"][data-y="${y}"]`
+            );
+            if (input && input.value.trim() === "") {
+              input.value = elem.toString();
+              input.classList.add("non-bold");
+            }
+          })
+        );
       });
-    });
   });
-});
+}
