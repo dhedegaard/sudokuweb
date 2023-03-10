@@ -1,161 +1,648 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=1200, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1200, initial-scale=1" />
     <title>Sudoku Solver</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="static/sudokuweb.css"/>
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="static/sudokuweb.css" />
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="static/sudokuweb.js"></script>
-</head>
-<body>
-<div class="center">
-    <div class="grid">
+  </head>
+  <body>
+    <div class="center">
+      <div class="grid">
         <h1>Sudoku solver</h1>
 
         <form method="POST" action="/solve">
-            <table>
-                <tr class="row" data-y="0">
-                    <td>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="0"
-                               autofocus>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="0">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2"
-                               data-y="0">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2"
-                               data-y="1">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="2">
-                    </td>
-                    <td class="box">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="0">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="0">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="0">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="1">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="2">
-                    </td>
-                    <td class="box">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="0">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="0">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="0">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="1">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="1">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="2">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="2">
-                    </td>
-                </tr>
-                <tr class="row" data-y="0">
-                    <td class="vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="3">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="4">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="5">
-                    </td>
-                    <td class="box vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="3">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="4">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="5">
-                    </td>
-                    <td class="box vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="3">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="3">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="4">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="4">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="5">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="5">
-                    </td>
-                </tr>
-                <tr class="row" data-y="0">
-                    <td class="vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="6">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="7">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="0" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="1" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="2" data-y="8">
-                    </td>
-                    <td class="box vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="6">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="7">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="3" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="4" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="5" data-y="8">
-                    </td>
-                    <td class="box vbox">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="6">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="6">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="7">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="7">
-                        <br/>
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="6" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="7" data-y="8">
-                        <input maxlength="1" type="tel" class="col-lg-1 form-control node" data-x="8" data-y="8">
-                    </td>
-                </tr>
-            </table>
-            <button class="btn btn-primary btn-lg" type="submit">
-                <i class="glyphicon glyphicon-cog"></i>
-                Solve
-            </button>
+          <table>
+            <tr class="row" data-y="0">
+              <td>
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="0"
+                  autofocus
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="0"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="0"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="1"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="2"
+                />
+              </td>
+              <td class="box">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="0"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="0"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="0"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="1"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="2"
+                />
+              </td>
+              <td class="box">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="0"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="0"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="0"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="1"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="1"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="2"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="2"
+                />
+              </td>
+            </tr>
+            <tr class="row" data-y="0">
+              <td class="vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="3"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="4"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="5"
+                />
+              </td>
+              <td class="box vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="3"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="4"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="5"
+                />
+              </td>
+              <td class="box vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="3"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="3"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="4"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="4"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="5"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="5"
+                />
+              </td>
+            </tr>
+            <tr class="row" data-y="0">
+              <td class="vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="6"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="7"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="0"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="1"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="2"
+                  data-y="8"
+                />
+              </td>
+              <td class="box vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="6"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="7"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="3"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="4"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="5"
+                  data-y="8"
+                />
+              </td>
+              <td class="box vbox">
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="6"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="6"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="7"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="7"
+                />
+                <br />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="6"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="7"
+                  data-y="8"
+                />
+                <input
+                  maxlength="1"
+                  type="tel"
+                  class="col-lg-1 form-control node"
+                  data-x="8"
+                  data-y="8"
+                />
+              </td>
+            </tr>
+          </table>
+          <button class="btn btn-primary btn-lg" type="submit">
+            <i class="glyphicon glyphicon-cog"></i>
+            Solve
+          </button>
         </form>
+      </div>
+      <br />
     </div>
-    <br/>
-</div>
-</body>
+  </body>
 </html>
