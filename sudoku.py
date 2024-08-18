@@ -120,9 +120,8 @@ def _next(board: Board, x: int, y: int) -> Board | None:
 def _is_valid(board: Board, val: int, x: int, y: int):
     # Check horizontal.
     for _x in range(9):
-        if _x != x:
-            if board[y][_x] == val:
-                return False
+        if _x != x and board[y][_x] == val:
+            return False
 
     # Check vertical.
     for _y in range(9):
