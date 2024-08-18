@@ -140,7 +140,7 @@ def _is_valid(board: Board, val: int, x: int, y: int):
 
 
 def _main():
-    board = [
+    candidate = [
         [0, 0, 2, 0, 3, 0, 7, 4, 0],
         [6, 0, 5, 0, 9, 0, 8, 0, 0],
         [4, 0, 0, 2, 0, 0, 0, 6, 9],
@@ -151,8 +151,12 @@ def _main():
         [0, 0, 1, 0, 6, 0, 4, 0, 7],
         [0, 4, 6, 0, 7, 0, 5, 0, 0],
     ]
+    board = validate_board(candidate)
     result = solve(board)
-    print(pretty_print(result))
+    if result is not None:
+        print(pretty_print(result))
+    else:
+        print("No solution found for board.")
 
 
 if __name__ == "__main__":
