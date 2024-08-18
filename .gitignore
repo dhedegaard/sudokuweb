@@ -53,3 +53,5 @@ javadoc
 *.sublime-workspace
 
 .idea
+.venv
+.vscode
