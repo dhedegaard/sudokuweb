@@ -2,15 +2,29 @@ from __future__ import absolute_import, division, print_function
 from copy import deepcopy
 from io import StringIO
 
+type BoardRow = tuple[int, int, int, int, int, int, int, int, int]
+type Board = tuple[
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+    BoardRow,
+]
+
 
 class InvalidBoardException(RuntimeError):
     """
     Thrown whenever an invalid board is encountered.
     """
-    pass
+
+    message: str
 
 
-def solve(board):
+def solve(board: Board) -> Board | None:
     """
     Returns a solved version of the board, if it is solvable.
 
@@ -24,7 +38,7 @@ def solve(board):
     return _backtrack(board, 0, 0)
 
 
-def pretty_print(board):
+def pretty_print(board: Board) -> str:
     """
     Returns a string with the board pretty as a string.
 
@@ -34,48 +48,49 @@ def pretty_print(board):
     result = StringIO()
     for y, row in enumerate(board):
         if y % 3 == 0 and y > 0:
-            result.write('-------+-------+-------\n')
+            result.write("-------+-------+-------\n")
 
         line = StringIO()
         for x, elem in enumerate(row):
             if x % 3 == 0 and x > 0:
-                line.write(' |')
+                line.write(" |")
 
             if not elem:
-                line.write(' _')
+                line.write(" _")
             else:
-                line.write(' %s' % elem)
-        result.write('%s\n' % line.getvalue())
+                line.write(" %s" % elem)
+        result.write("%s\n" % line.getvalue())
         line.close()
     return result.getvalue()
 
 
-def _validate_board(board):
+def _validate_board(board: Board) -> None:
     if not isinstance(board, (list, tuple)):
-        raise InvalidBoardException('board is not a list.')
+        raise InvalidBoardException("board is not a list.")
 
     if len(board) != 9:
         raise InvalidBoardException(
-            'outer list does not have a length of 9, length is: %s.' % len(
-                board))
+            "outer list does not have a length of 9, length is: %s." % len(board)
+        )
 
     for y, sub in enumerate(board):
         if not isinstance(sub, (list, tuple)):
-            raise InvalidBoardException('sublist on index %s is not a list' %
-                                        y)
+            raise InvalidBoardException("sublist on index %s is not a list" % y)
 
         if len(board) != 9:
             raise InvalidBoardException(
-                'inner list on index %s does not have length of 9, '
-                'length is: %s' % (y, len(sub)))
+                "inner list on index %s does not have length of 9, "
+                "length is: %s" % (y, len(sub))
+            )
 
         for x, elem in enumerate(sub):
             if x is not None and not isinstance(x, int):
                 raise InvalidBoardException(
-                    'element on y=%s, x=%s is not int or None' % (y, x))
+                    "element on y=%s, x=%s is not int or None" % (y, x)
+                )
 
 
-def _backtrack(board, x, y):
+def _backtrack(board: Board, x: int, y: int) -> Board | None:
     board = deepcopy(board)
 
     # Skip positions with data (ie not 0 or None).
@@ -96,7 +111,7 @@ def _backtrack(board, x, y):
     return None
 
 
-def _next(board, x, y):
+def _next(board: Board, x: int, y: int) -> Board | None:
     if x == 8:
         if y == 8:
             return board
@@ -106,7 +121,7 @@ def _next(board, x, y):
         return _backtrack(board, x + 1, y)
 
 
-def _is_valid(board, val, x, y):
+def _is_valid(board: Board, val: int, x: int, y: int):
     # Check horizontal.
     for _x in range(9):
         if _x != x:
@@ -148,5 +163,5 @@ def _main():
     print(pretty_print(result))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _main()
