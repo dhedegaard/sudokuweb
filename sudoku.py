@@ -83,7 +83,7 @@ def _validate_board(board: Board) -> None:
                 "length is: %s" % (y, len(sub))
             )
 
-        for x, elem in enumerate(sub):
+        for x, _ in enumerate(sub):
             if x is not None and not isinstance(x, int):
                 raise InvalidBoardException(
                     "element on y=%s, x=%s is not int or None" % (y, x)
