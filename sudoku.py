@@ -1,4 +1,5 @@
 # pyright: strict
+""" A simple backtracking soduko solver. """
 
 from __future__ import absolute_import, division, print_function
 from copy import deepcopy
@@ -57,6 +58,7 @@ def pretty_print(board: Board) -> str:
 
 
 def validate_board(board: object) -> Board:
+    """Checks that the argument supplied is indeed a valid board."""
     if not isinstance(board, (list)):
         raise InvalidBoardException("board is not a list.")
     board_list = typing.cast(list[object], board)

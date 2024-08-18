@@ -1,4 +1,5 @@
 # pyright: strict
+""" A flask web server that solves sudoku puzzles. """
 
 import json
 import os
@@ -16,12 +17,14 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
+def index():
+    """Returns the main template for the web server on "/"."""
     return render_template("index.html")
 
 
 @app.route("/solve", methods=["POST"])
 def solve():
+    """The /solve route, parses a board from JSON and returns a solved board (if able to)."""
     board_string = request.values.get("board")
 
     if not board_string:
