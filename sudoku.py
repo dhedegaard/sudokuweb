@@ -126,18 +126,16 @@ def _is_valid(board: Board, val: int, x: int, y: int):
 
     # Check vertical.
     for _y in range(9):
-        if _y != y:
-            if board[_y][x] == val:
-                return False
+        if _y != y and board[_y][x] == val:
+            return False
 
     # Check the current box.
     xbox = (x // 3) * 3
     ybox = (y // 3) * 3
     for _x in range(xbox, xbox + 3):
         for _y in range(ybox, ybox + 3):
-            if _y != y and _x != x:
-                if board[_y][_x] == val:
-                    return False
+            if _y != y and _x != x and board[_y][_x] == val:
+                return False
 
     # If all checks pass, the value in the given position is valid.
     return True
