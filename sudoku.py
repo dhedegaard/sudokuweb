@@ -56,27 +56,29 @@ def pretty_print(board: Board) -> str:
     return result.getvalue()
 
 
-def validate_board(board: any) -> Board:
-    if not isinstance(board, (list, tuple)):
+def validate_board(board: object) -> Board:
+    if not isinstance(board, (list)):
         raise InvalidBoardException("board is not a list.")
+    board_list = typing.cast(list[object], board)
 
-    if len(board) != 9:
+    if len(board_list) != 9:
         raise InvalidBoardException(
-            "outer list does not have a length of 9, length is: %s." % len(board)
+            "outer list does not have a length of 9, length is: %s." % len(board_list)
         )
 
-    for y, sub in enumerate(board):
-        if not isinstance(sub, (list, tuple)):
+    for y, row in enumerate(board_list):
+        if not isinstance(row, list):
             raise InvalidBoardException("sublist on index %s is not a list" % y)
+        row_list = typing.cast(list[object], row)
 
-        if len(board) != 9:
+        if len(row_list) != 9:
             raise InvalidBoardException(
                 "inner list on index %s does not have length of 9, "
-                "length is: %s" % (y, len(sub))
+                "length is: %s" % (y, len(row_list))
             )
 
-        for x, _ in enumerate(sub):
-            if x is not None and not isinstance(x, int):
+        for x, elem in enumerate(row_list):
+            if not isinstance(elem, int):
                 raise InvalidBoardException(
                     "element on y=%s, x=%s is not int or None" % (y, x)
                 )
