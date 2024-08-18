@@ -1,9 +1,15 @@
+# pyright: strict
+
 import json
 import os
 
 from flask import Flask, request, render_template, Response
 
-from sudoku import Board, solve as sudoku_solve, InvalidBoardException, validate_board
+from sudoku import (
+    solve as sudoku_solve,
+    InvalidBoardException,
+    validate_board,
+)
 
 
 app = Flask(__name__)
@@ -22,7 +28,7 @@ def solve():
         return "No board parameter found", 403
 
     parsed_board_string = json.loads(board_string)
-    board: Board = validate_board(parsed_board_string)
+    board = validate_board(parsed_board_string)
 
     try:
         result = sudoku_solve(board)
