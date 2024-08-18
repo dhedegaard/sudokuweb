@@ -110,13 +110,11 @@ def _backtrack(board: Board, x: int, y: int) -> Board | None:
 
 
 def _next(board: Board, x: int, y: int) -> Board | None:
-    if x == 8:
-        if y == 8:
-            return board
-        else:
-            return _backtrack(board, 0, y + 1)
-    else:
+    if x < 8:
         return _backtrack(board, x + 1, y)
+    if y < 8:
+        return _backtrack(board, 0, y + 1)
+    return board
 
 
 def _is_valid(board: Board, val: int, x: int, y: int):
