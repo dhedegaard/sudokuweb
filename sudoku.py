@@ -50,8 +50,8 @@ def pretty_print(board: Board) -> str:
             if not elem:
                 line.write(" _")
             else:
-                line.write(" %s" % elem)
-        result.write("%s\n" % line.getvalue())
+                line.write(f" {elem}")
+        result.write(f"{line.getvalue()}\n")
         line.close()
     return result.getvalue()
 
