@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 from copy import deepcopy
 from io import StringIO
+import typing
 
 type BoardRow = list[int]
 type Board = list[BoardRow]
@@ -24,7 +25,6 @@ def solve(board: Board) -> Board | None:
     :except InvalidBoardException: If the board supplied is not in a valid
                                    format.
     """
-    _validate_board(board)
     return _backtrack(board, 0, 0)
 
 
@@ -54,7 +54,7 @@ def pretty_print(board: Board) -> str:
     return result.getvalue()
 
 
-def _validate_board(board: Board) -> None:
+def validate_board(board: any) -> Board:
     if not isinstance(board, (list, tuple)):
         raise InvalidBoardException("board is not a list.")
 
@@ -78,6 +78,8 @@ def _validate_board(board: Board) -> None:
                 raise InvalidBoardException(
                     "element on y=%s, x=%s is not int or None" % (y, x)
                 )
+
+    return typing.cast(Board, board)
 
 
 def _backtrack(board: Board, x: int, y: int) -> Board | None:

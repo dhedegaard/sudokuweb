@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, request, render_template, Response
 
-from sudoku import Board, solve as sudoku_solve, InvalidBoardException
+from sudoku import Board, solve as sudoku_solve, InvalidBoardException, validate_board
 
 
 app = Flask(__name__)
@@ -21,7 +21,8 @@ def solve():
     if not board_string:
         return "No board parameter found", 403
 
-    board: Board = json.loads(board_string)
+    parsed_board_string = json.loads(board_string)
+    board: Board = validate_board(parsed_board_string)
 
     try:
         result = sudoku_solve(board)
