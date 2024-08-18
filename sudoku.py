@@ -63,24 +63,24 @@ def validate_board(board: object) -> Board:
 
     if len(board_list) != 9:
         raise InvalidBoardException(
-            "outer list does not have a length of 9, length is: %s." % len(board_list)
+            f"outer list does not have a length of 9, length is: {len(board_list)}."
         )
 
     for y, row in enumerate(board_list):
         if not isinstance(row, list):
-            raise InvalidBoardException("sublist on index %s is not a list" % y)
+            raise InvalidBoardException(f"sublist on index {y} is not a list")
         row_list = typing.cast(list[object], row)
 
         if len(row_list) != 9:
             raise InvalidBoardException(
-                "inner list on index %s does not have length of 9, "
-                "length is: %s" % (y, len(row_list))
+                f"inner list on index {y} does not have length of 9, "
+                f"length is: {len(row_list)}"
             )
 
         for x, elem in enumerate(row_list):
             if not isinstance(elem, int):
                 raise InvalidBoardException(
-                    "element on y=%s, x=%s is not int or None" % (y, x)
+                    f"element on y={y}, x={x} is not int or None"
                 )
 
     return typing.cast(Board, board)
