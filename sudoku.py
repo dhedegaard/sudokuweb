@@ -2,18 +2,8 @@ from __future__ import absolute_import, division, print_function
 from copy import deepcopy
 from io import StringIO
 
-type BoardRow = tuple[int, int, int, int, int, int, int, int, int]
-type Board = tuple[
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-    BoardRow,
-]
+type BoardRow = list[int]
+type Board = list[BoardRow]
 
 
 class InvalidBoardException(RuntimeError):
